@@ -337,6 +337,20 @@
 	});
 </script>
 <style type="text/css">
+    div.container4 {
+    height: 10em;
+    position: relative }
+
+    div.container4 p {
+    margin: 0;
+    /* background: yellow; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    font-size: large;
+    transform: translate(-50%, -50%) }
+
 	#game {
 		font-family: 'Source Code Pro', monospace;
 		background-color: #000000;
@@ -450,6 +464,11 @@
 	<audio id="audiofinish" src="snd/finish.ogg"></audio>
 	<img id="phone" src="phone.png" />
 	<div id="bgfill"></div>
+    <div class=container4>
+        <p>Key Values: WASD and Arrow Keys <br>
+        When Left ICON is on Target, Hit Space Bar <br>
+        When Right ICON is on Target, Hit Enter Key</p>
+      </div>
 	<div id="phonewrapper">
 		<div id="game">
 			<div id="infobox"></div>
