@@ -179,8 +179,9 @@
         location.reload();
     }
     
-    function reloadWindow(){
-        myTestFunc(1, 10);
+    function DeleteValues(){
+        localStorage.removeItem("size");
+        localStorage.removeItem("time");
         location.reload();
     }
 
@@ -188,19 +189,21 @@
     $( document ).ready(function() {
         console.log( "ready!" );
         var size = 5;
+        $('#size').val(size);
         var time = 24;
+        $('#time').val(time);
 
-        if(localStorage.getItem("size") != 0){
+        if(localStorage.getItem("size") != 0 && localStorage.hasOwnProperty("size")){
             size = localStorage.getItem("size");
             $('#size').val(size = localStorage.getItem("size"));
         }
             
 
-        if(localStorage.getItem("time") != 0){
+        if(localStorage.getItem("time") != 0 && localStorage.hasOwnProperty("time")){
             $('#time').val(localStorage.getItem("time"));
             time = localStorage.getItem("time");
         }
-            
+        
 
         myTestFunc(size, time);
     });
@@ -436,6 +439,8 @@
         <label>Time: <input id="time" type="text" value=""> (Input time here, be in seconds)</label>
         <br><br>
         <button onclick="GameSettings()">Start Game</button>
+        <br><br>
+        <button onclick="DeleteValues()">Delete Stored Values</button>
       </form>
 	<audio id="audiocorrect" src="snd/correct.ogg"></audio>
 	<audio id="audiowrong" src="snd/wrong.ogg"></audio>
