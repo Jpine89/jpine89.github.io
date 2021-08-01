@@ -66,7 +66,7 @@
 			setTimeout(function(){
 				fadeBigMsg(true);
 				playSound('audiofinish',1);
-				setTimeout(function(){$.post('http://mhacking/callback', JSON.stringify({'success': true, 'remainingtime': endTime-now}));}, 2000);
+				// setTimeout(function(){$.post('http://mhacking/callback', JSON.stringify({'success': true, 'remainingtime': endTime-now}));}, 2000);
 			}, 2000);
 			resetGameState();
 		}
@@ -100,7 +100,7 @@
 			setTimeout(function(){
 				fadeBigMsg(true);
 				playSound('audiofail',1);
-				$.post('http://mhacking/callback', JSON.stringify({'success': false, 'remainingtime': 0}));
+				// $.post('http://mhacking/callback', JSON.stringify({'success': false, 'remainingtime': 0}));
 			}, 2000);
 			resetGameState();
 		} else {
@@ -166,12 +166,44 @@
 		},5);
 	}
 
-    function myTestFunc(){
+    function myTestFunc(size, time){
         setBigMsg('<span class="flash">Starting Hack...</span><br /><span class="small">Find the constant code blocks</span>');
         playSound('audiostart',1);
         $('.flash').fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
-        setTimeout(function(){fadeBigMsg(false); startGame(2,500);}, 3000);
+        setTimeout(function(){fadeBigMsg(false); startGame(size,time);}, 3000);
     }
+
+    function GameSettings(){
+        localStorage.setItem("size", $('#size').val());
+        localStorage.setItem("time", $('#time').val());
+        location.reload();
+    }
+    
+    function reloadWindow(){
+        myTestFunc(1, 10);
+        location.reload();
+    }
+
+
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        var size = 5;
+        var time = 24;
+
+        if(localStorage.getItem("size") != 0){
+            size = localStorage.getItem("size");
+            $('#size').val(size = localStorage.getItem("size"));
+        }
+            
+
+        if(localStorage.getItem("time") != 0){
+            $('#time').val(localStorage.getItem("time"));
+            time = localStorage.getItem("time");
+        }
+            
+
+        myTestFunc(size, time);
+    });
 
 	$(function(){
 		$( '#game' ).append( '<table id="gametable"></table>' );
@@ -262,42 +294,42 @@
 			}
 		}
 
-		window.addEventListener('message', function(event) {
+		// window.addEventListener('message', function(event) {
 
-			var item = event.data;
+		// 	var item = event.data;
 
-			if ('start' in item) {
-				if('s' in item && 'd' in item) {
-					setBigMsg('<span class="flash">Starting Hack...</span><br /><span class="small">Find the constant code blocks</span>');
-					playSound('audiostart',1);
-					$('.flash').fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
-					setTimeout(function(){fadeBigMsg(false); startGame(item.s,item.d);}, 3000);
-				}
-			}
+		// 	if ('start' in item) {
+		// 		if('s' in item && 'd' in item) {
+		// 			setBigMsg('<span class="flash">Starting Hack...</span><br /><span class="small">Find the constant code blocks</span>');
+		// 			playSound('audiostart',1);
+		// 			$('.flash').fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
+		// 			setTimeout(function(){fadeBigMsg(false); startGame(item.s,item.d);}, 3000);
+		// 		}
+		// 	}
 			
-			if ('displayMsg' in item) {
-				setBigMsg('<span class="flash">'+item.displayMsg+'</span>');
-			}
+		// 	if ('displayMsg' in item) {
+		// 		setBigMsg('<span class="flash">'+item.displayMsg+'</span>');
+		// 	}
 			
-			if ('fail' in item) {
-				if (item.fail) {
-					endTime = now;
-				}
-			}
+		// 	if ('fail' in item) {
+		// 		if (item.fail) {
+		// 			endTime = now;
+		// 		}
+		// 	}
 
-			if('show' in item) {
-				if (item.show) {
-					$('#phone').fadeIn();
-					$('#bgfill').fadeIn();
-					$('#phonewrapper').fadeIn();
-				} else {
-					$('#phone').fadeOut();
-					$('#bgfill').fadeOut();
-					$('#phonewrapper').fadeOut();
-				}
-			}
+		// 	if('show' in item) {
+		// 		if (item.show) {
+		// 			$('#phone').fadeIn();
+		// 			$('#bgfill').fadeIn();
+		// 			$('#phonewrapper').fadeIn();
+		// 		} else {
+		// 			$('#phone').fadeOut();
+		// 			$('#bgfill').fadeOut();
+		// 			$('#phonewrapper').fadeOut();
+		// 		}
+		// 	}
 
-		});
+		// });
 		
 	});
 </script>
@@ -397,7 +429,14 @@
 	}
 </style>
 </head>
-<body onload="myTestFunc()">
+<body>
+    <form id="form">
+        <label>Size: <input id="size" type="text" value="">  (keep range above 0 but below 6)</label>
+        <br><br>
+        <label>Time: <input id="time" type="text" value=""> (Input time here, be in seconds)</label>
+        <br><br>
+        <button onclick="GameSettings()">Start Game</button>
+      </form>
 	<audio id="audiocorrect" src="snd/correct.ogg"></audio>
 	<audio id="audiowrong" src="snd/wrong.ogg"></audio>
 	<audio id="audiobeep" src="snd/beep.ogg"></audio>
