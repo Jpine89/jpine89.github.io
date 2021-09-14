@@ -121,8 +121,8 @@
 					lastBeep = now;
 				}
 				if (lastReseed[i][j] < now - 200) {
-					// gameTable[i][j] = hex[getRandomInt(0,15)];
-					gameTable[i][j] = hex[3];
+					gameTable[i][j] = hex[getRandomInt(0,15)];
+					// gameTable[i][j] = hex[3];
 					lastReseed[i][j] = now;
 				}
 				$( "#" + (i+1).toString() + (j+1).toString() ).text(gameTable[i][j]);
