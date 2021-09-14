@@ -10,7 +10,8 @@ let bounce = false;
 
 function init() 
 { 
-    console.log(degrees);
+
+    // console.log(degrees);
     ctx.clearRect(0, 0, W, H), 
     ctx.beginPath(), 
     ctx.strokeStyle = bgcolor, 
@@ -41,17 +42,17 @@ function draw()
     g_start = getRandomInt(20, 40) / 10, 
     g_end = getRandomInt(5, 10) / 10, 
     g_end = g_start + g_end, 
-    degrees = 0,
+    degrees = 1,
     new_degrees = 360, 
-    key_to_press = "" + getRandomInt(1, 4), 
+    key_to_press = "" + getRandomInt(1, 5), 
     time = 5 * getRandomInt(1, 3), 
     animation_loop = setInterval(animate_to, time) 
 } 
 
 function animate_to() 
 { 
-    if (degrees < 2 && bounce)
-        return console.log("Failed: timeout!"), void wrong();
+    if (degrees <= 2 && bounce)
+         return console.log("Failed: timeout!"), void wrong();
     if (degrees >= new_degrees)
         bounce = true;
     if (!bounce)
@@ -67,6 +68,7 @@ function correct()
 { 
     document.querySelector(".stats").classList.remove("wrong"), 
     streak > max_streak && (max_streak = streak), 
+    bounce = false,
     streak++, draw() 
 } 
 
@@ -74,6 +76,7 @@ function wrong()
 { 
     document.querySelector(".stats").classList.add("wrong"), 
     streak > max_streak && (max_streak = streak), 
+    bounce = false,
     streak = 0, draw() 
 } 
 
@@ -92,6 +95,9 @@ document.addEventListener("keydown", (function (e)
     { 
         let e = 180 / Math.PI * g_start, 
         t = 180 / Math.PI * g_end; 
+        console.log(e);
+        console.log(t);
+        console.log(degrees);
         degrees < e ? (console.log("Failed: Too soon!"), wrong()) : degrees > t ? (console.log("Failed: Too late!"), wrong()) : (console.log("Success!"), correct()) 
     } 
     else console.log("Failed: Pressed " + t + " instead of " + key_to_press), wrong() 
