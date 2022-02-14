@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\HackingMiniGame"
+    "\\HackingMiniGame",
+    "\\PineappleTrading",
+    "\\PineappleTrading\\PineappleTrading",
+    "\\PineappleTrading\\PineappleTrading\\Pages",
+    "\\PineappleTrading\\PineappleTrading\\wwwroot"
   ],
-  "SelectedNode": "\\HackingMiniGame\\index.html",
+  "SelectedNode": "\\PineappleTrading\\PineappleTrading\\bin",
   "PreviewInSolutionExplorer": false
 }
